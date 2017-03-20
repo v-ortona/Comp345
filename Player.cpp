@@ -1,9 +1,19 @@
+<<<<<<< HEAD
 #include "Player.h"
 
 Player::Player(char p, vector<Role> &roleDeck, vector<Card*> &cardDeck, int pCount, int i)
 {
     this->location = 7; //Atlanta is location 7
     this->cards = vector<Card*>(20);
+=======
+#include <iostream>
+#include "Player.h"
+
+Player::Player(char p, Role roleDeck[], Card cardDeck[], int pCount, int roleNum)
+{
+    location = 1; //Atlanta is location 1
+    cards = new Card[20];
+>>>>>>> 19a1acb3e3cf43710a55658f0a4e517fa0657905
     switch(pCount) //draws cards based on player count
     {
         case 1:
@@ -19,6 +29,7 @@ Player::Player(char p, vector<Role> &roleDeck, vector<Card*> &cardDeck, int pCou
             drawCards(cardDeck, 2);
             break;
     }
+<<<<<<< HEAD
     this->role = roleDeck[roleDeck.size()-1];
     roleDeck.pop_back();
     switch(p)
@@ -46,10 +57,15 @@ Player::Player(char p, vector<Role> &roleDeck, vector<Card*> &cardDeck, int pCou
     }
     this->rc = ReferenceCard();
     this->id= i;
+=======
+    role = roleDeck[roleNum];
+    pawn = p;
+>>>>>>> 19a1acb3e3cf43710a55658f0a4e517fa0657905
 }
 
 Player::Player()
 {
+<<<<<<< HEAD
     this->location = 7;
     this->cards = vector<Card*>();
     this->role = Role();
@@ -185,6 +201,54 @@ void Player::drawCards(vector<Card*> deck, int num)
     int userCards = this->cards.size(); //number of cards in user hand
     int lastCard = deck.size(); //index of last card
     if(lastCard == 0) //if deck runs out
+=======
+    location = 0;
+    cards = new Card[20];
+    role = null;
+    pawn = '0';
+}
+Player::~Player(){}
+
+//////////AUTOMATIC ACTIONS//////////////////
+void Player::startTurn()
+{
+    actionsLeft=4;
+}
+
+void Player::subtractAction()
+{
+    actionsLeft--;
+}
+
+void Player::concludeTurn(Card deck[])
+{
+    this->drawCards(deck[], 2);
+}
+
+void Player::drawCards(Card deck[], int num)
+{
+    int userCards; //number of cards in user hand
+    int lastCard; //index of last card
+    for (int i=0; i<60; i++) //finds last card in deck
+    {
+        if(deck[i] == 0) //if position is null
+        {
+            lastCard = i-1;
+            break;
+        }
+    }
+
+    for (int y=0; y<20; y++) //find first empty slot in users hand
+    {
+        if(deck[y] == 0) //if position is null
+        {
+            userCards = y;
+            break;
+        }
+    }
+
+    if(lastCard - num < 0) //if deck runs out
+>>>>>>> 19a1acb3e3cf43710a55658f0a4e517fa0657905
     {
         //game over
     }
@@ -193,8 +257,13 @@ void Player::drawCards(vector<Card*> deck, int num)
     {
         for(int a = 0; a < num; a++)
         {
+<<<<<<< HEAD
             this->cards.push_back(deck.back());
             deck.pop_back();
+=======
+            cards[userCards + a] = deck[lastCard - a];
+            deck[lastCard - a] = 0;
+>>>>>>> 19a1acb3e3cf43710a55658f0a4e517fa0657905
         }
     }
 }
@@ -210,6 +279,7 @@ bool Player::checkAction()
         return true; 
 }
 
+<<<<<<< HEAD
 void Player::discard(int a)
 {
 	//vector<Card*> cards = this->getHand(); //does it make a copy
@@ -219,10 +289,14 @@ void Player::discard(int a)
 	this->cards[a] = this->cards.back();
 	this->cards.pop_back();
 }
+=======
+
+>>>>>>> 19a1acb3e3cf43710a55658f0a4e517fa0657905
 
 ////////PLAYER ACTIONS/////////////////////////////////
 void Player::move(int d)
 {
+<<<<<<< HEAD
 	
     //only drive movement is available.
     /*vector<City*> cities= m.getConnectedCities(this->location);
@@ -322,10 +396,28 @@ void Player::treatDisease(Map m)
             //city has no infection to remove
         }
         delete[] cp;
+=======
+    if(Player::checkAction())
+    {
+        location = d;
+        this->subtractAction();
+    }                
+}
+
+void Player::buildStation()
+{
+    //uses current player location, builds a station
+}
+
+void Player::treatDisease()
+{
+    //removes a disease cube from current player location
+>>>>>>> 19a1acb3e3cf43710a55658f0a4e517fa0657905
 }
 
 void Player::shareKnowledge(Player tg)
 {
+<<<<<<< HEAD
     if(this->checkAction())
     {
         char option;
@@ -371,10 +463,14 @@ void Player::shareKnowledge(Player tg)
             cout<<"sorry, this player is not on this space"<<endl;
         }
     } 
+=======
+    //trades a city card with player tg
+>>>>>>> 19a1acb3e3cf43710a55658f0a4e517fa0657905
 }
 
 void Player::discoverCure(char diseaseColor)
 {
+<<<<<<< HEAD
     int count=0;
     for (int i=0; i<(this->cards).size(); i++) //counts number of cards with appropriate disease color
     {
@@ -393,6 +489,12 @@ void Player::discoverCure(char diseaseColor)
 }
 
 void Player::activateAbility(vector<Card> &deck)
+=======
+    //treats a disease if diseaseColor matches the color of 4 cards
+}
+
+void Player::activateAbility(Card deck[])
+>>>>>>> 19a1acb3e3cf43710a55658f0a4e517fa0657905
 {
     //activates a player ability based on their role
 }
@@ -403,6 +505,7 @@ void Player::checkPassiveRole()
     //activates a passive ability based on the Players role. 
 }
 
+<<<<<<< HEAD
 /*
 void Player::savePlayer()
 {
@@ -456,3 +559,22 @@ void Player::loadPlayer(string fileName)
                 break;    
         
     }*/
+=======
+///////////PRINT FUNCTIONS/////////////////////
+void Player::displayHand()
+{
+    int userCardNum;
+    for (int y=0; y<20; y++) //find first empty slot in users hand
+    {
+        if(deck[y] == 0) //if position is null
+        {
+            userCardNum = y;
+            break;
+        }
+    }
+    for(int i=0; i<userCardNum; i++)
+    {
+        cout<<"Card at index "<< i <<": "<<cards[i].displayName<<endl;
+    }
+}
+>>>>>>> 19a1acb3e3cf43710a55658f0a4e517fa0657905

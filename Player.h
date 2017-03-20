@@ -1,3 +1,4 @@
+
 #ifndef PLAYER_H
 #define PLAYER_H
 
@@ -19,7 +20,6 @@ using namespace std;
 class Player
 {
     public:
-
         Player(char p, vector<Role> &roleDeck, vector<Card*> &deck, int pCount, int id);
         Player();
         ~Player();
@@ -52,7 +52,7 @@ class Player
         void concludeTurn(vector<Card*> deck);
         void drawCards(vector<Card*> deck, int num);
         bool checkAction();
-		void discard(int a);
+	void discard(int a);
 
         //passive effects check
         void checkPassiveRole();
@@ -85,5 +85,4 @@ class Player
             ar & actionsLeft;
             ar & rc;
         }*/
-};
 #endif 
